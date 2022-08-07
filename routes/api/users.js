@@ -16,11 +16,14 @@ router.post(
   '/',
   [
     check('fname', 'Name is required').not().isEmpty(),
+    check('healthid', 'Health ID is required').not().isEmpty(),
     check('email', 'Please include a valid email').isEmail(),
     check(
       'password',
       'Please enter a password with 6 or more characters'
     ).isLength({ min: 6 }),
+    check('confirmpassword', 'Confirm Password is required').not().isEmpty(),
+    check('phoneno', 'Please enter a valid phone number').isMobilePhone(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -29,7 +32,15 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { fname, lname, healthid, email, password } = req.body;
+    const {
+      fname,
+      lname,
+      healthid,
+      email,
+      password,
+      confirmpassword,
+      phoneno,
+    } = req.body;
 
     try {
       // See if user exists
@@ -39,6 +50,14 @@ router.post(
         return res
           .status(400)
           .json({ errors: [{ msg: 'User already exists' }] });
+      }
+
+      //Check if password and confirm password matches
+
+      if (password !== confirmpassword) {
+        return res.status(400).json({
+          errors: [{ msg: 'Password and Confirm Password does not match' }],
+        });
       }
 
       // Get users gravatar
@@ -55,12 +74,15 @@ router.post(
         email,
         password,
         avatar,
+        confirmpassword,
+        phoneno,
       });
 
       // Encrypt password using bcrypt
       const salt = await bcrypt.genSalt(10);
 
       user.password = await bcrypt.hash(password, salt);
+      user.confirmpassword = await bcrypt.hash(confirmpassword, salt);
 
       await user.save();
 

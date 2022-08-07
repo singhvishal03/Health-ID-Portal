@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema({
   },
   lname: {
     type: String,
-    required: true,
+    required: false,
   },
   healthid: {
     type: String,
@@ -22,22 +22,14 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  //   confirmpassword: {
-  //     type: String,
-  //     required: true,
-  //   },
-  //   bloodgroup: {
-  //     type: String,
-  //     required: true,
-  //   },
-  //   address: {
-  //     type: String,
-  //     required: true,
-  //   },
-  //   gender: {
-  //     type: String,
-  //     required: true,
-  //   },
+  confirmpassword: {
+    type: String,
+    required: true,
+  },
+  phoneno: {
+    type: Number,
+    required: true,
+  },
   avatar: {
     type: String,
   },

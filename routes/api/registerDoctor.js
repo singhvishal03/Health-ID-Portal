@@ -7,16 +7,17 @@ const config = require('config');
 const { check, validationResult } = require('express-validator');
 
 // Importing Models
-const User = require('../../models/User');
+const Doctor = require('../../models/Doctor');
 
-//@route              POST api/users
-//@desc               Register user
+//@route              POST api/doctor
+//@desc               Register Doctor
 //@access_modifier    Public
 router.post(
   '/',
   [
     check('fname', 'Name is required').not().isEmpty(),
-    check('healthid', 'Health ID is required').not().isEmpty(),
+    check('loginid', 'Login ID is required').not().isEmpty(),
+    check('department', 'Department is required').not().isEmpty(),
     check('email', 'Please include a valid email').isEmail(),
     check(
       'password',
@@ -24,6 +25,12 @@ router.post(
     ).isLength({ min: 6 }),
     check('confirmpassword', 'Confirm Password is required').not().isEmpty(),
     check('phoneno', 'Please enter a valid phone number').isMobilePhone(),
+    check('gender', 'Gender is required').not().isEmpty(),
+    check('experience', 'Experience is required').not().isEmpty(),
+    check('consultancycharge', 'Consultancy Charge is required')
+      .not()
+      .isEmpty(),
+    check('status', 'Status is required').not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -35,21 +42,26 @@ router.post(
     const {
       fname,
       lname,
-      healthid,
+      loginid,
+      department,
       email,
       password,
       confirmpassword,
       phoneno,
+      gender,
+      experience,
+      consultancycharge,
+      status,
     } = req.body;
 
     try {
-      // See if user exists
-      let user = await User.findOne({ phoneno });
+      // See if doctor exists
+      let doctor = await Doctor.findOne({ loginid });
 
-      if (user) {
+      if (doctor) {
         return res
           .status(400)
-          .json({ errors: [{ msg: 'User already exists' }] });
+          .json({ errors: [{ msg: 'Dcotor already exists' }] });
       }
 
       //Check if password and confirm password matches
@@ -60,36 +72,33 @@ router.post(
         });
       }
 
-      // Get users gravatar
-      const avatar = gravatar.url(email, {
-        s: '200', // size
-        r: 'pg', // rating
-        d: 'mm', // default image like user icon
-      });
-
-      user = new User({
+      doctor = new Doctor({
         fname,
         lname,
-        healthid,
+        loginid,
+        department,
         email,
         password,
-        avatar,
         confirmpassword,
         phoneno,
+        gender,
+        experience,
+        consultancycharge,
+        status,
       });
 
       // Encrypt password using bcrypt
       const salt = await bcrypt.genSalt(10);
 
-      user.password = await bcrypt.hash(password, salt);
-      user.confirmpassword = await bcrypt.hash(confirmpassword, salt);
+      doctor.password = await bcrypt.hash(password, salt);
+      doctor.confirmpassword = await bcrypt.hash(confirmpassword, salt);
 
-      await user.save();
+      await doctor.save();
 
       // Return jsonwebtoken
       const payload = {
-        user: {
-          id: user.id,
+        doctor: {
+          id: doctor.id,
         },
       };
 

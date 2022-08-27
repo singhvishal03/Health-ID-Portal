@@ -5,31 +5,31 @@ const config = require('config');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { check, validationResult } = require('express-validator');
-const User = require('../../models/User');
+const Doctor = require('../../models/Doctor');
 
-//@route              GET api/auth
+//@route              GET api/doctorauth/:id
 //@desc               Test route
 //@access_modifier    Public
 router.get('/:id', auth, async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).select(
+    const doctor = await Doctor.findById(req.params.id).select(
       '-password -confirmpassword'
     );
-    res.json(user);
+    res.json(doctor);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
 });
 
-//@route              POST api/auth
-//@desc               Authenticate user & get token
+//@route              POST api/doctorauth
+//@desc               Authenticate doctor & get token
 //@access_modifier    Public
 router.post(
   '/',
   [
     // check('fname', 'Name is required').not().isEmpty(),
-    check('phoneno', 'Please include a valid phone no').isMobilePhone(),
+    check('loginid', 'Please include a valid loginid').exists(),
     check('password', 'Password is required.').exists(),
   ],
   async (req, res) => {
@@ -38,19 +38,19 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
     //fname, lname, healthid,
-    const { phoneno, password } = req.body;
+    const { loginid, password } = req.body;
 
     try {
-      // See if user exists
-      let user = await User.findOne({ phoneno });
+      // See if doctor exists
+      let doctor = await Doctor.findOne({ loginid });
 
-      if (!user) {
+      if (!doctor) {
         return res
           .status(400)
           .json({ errors: [{ msg: 'Invalid Credentials' }] });
       }
 
-      const isMatch = await bcrypt.compare(password, user.password);
+      const isMatch = await bcrypt.compare(password, doctor.password);
       if (!isMatch) {
         return res
           .status(400)
@@ -59,8 +59,8 @@ router.post(
 
       // Return jsonwebtoken
       const payload = {
-        user: {
-          id: user.id,
+        doctor: {
+          id: doctor.id,
         },
       };
 

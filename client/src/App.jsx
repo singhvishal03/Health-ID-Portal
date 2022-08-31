@@ -9,29 +9,37 @@ import UserLogin from './UserLogin';
 import AdminLogin from './AdminLogin';
 import DoctorLogin from './DoctorLogin';
 import Navbar from './Navbar';
+import Alert from './Alert';
 
 import { Routes, Route } from 'react-router-dom';
+
+// Redux
+import { Provider } from 'react-redux';
+import store from './store';
 
 const App = () => {
   return (
     <>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/registeruser" element={<RegisterUser />} />
-        <Route path="/registerdoctor" element={<RegisterDoctor />} />
-        <Route path="/userlogin" element={<UserLogin />} />
-        <Route path="/adminlogin" element={<AdminLogin />} />
-        <Route path="/doctorlogin" element={<DoctorLogin />} />
-        <Route
-          path="*"
-          element={
-            <main style={{ padding: '1rem' }}>
-              <h1>There's nothing here!</h1>
-            </main>
-          }
-        />
-      </Routes>
+      <Provider store={store}>
+        <Navbar />
+        <Alert />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/registeruser" element={<RegisterUser />} />
+          <Route path="/registerdoctor" element={<RegisterDoctor />} />
+          <Route path="/userlogin" element={<UserLogin />} />
+          <Route path="/adminlogin" element={<AdminLogin />} />
+          <Route path="/doctorlogin" element={<DoctorLogin />} />
+          <Route
+            path="*"
+            element={
+              <main style={{ padding: '1rem' }}>
+                <h1>There's nothing here!</h1>
+              </main>
+            }
+          />
+        </Routes>
+      </Provider>
     </>
   );
 };

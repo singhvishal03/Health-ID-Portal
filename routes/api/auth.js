@@ -10,9 +10,9 @@ const User = require('../../models/User');
 //@route              GET api/auth
 //@desc               Test route
 //@access_modifier    Public
-router.get('/:id', auth, async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).select(
+    const user = await User.findById(req.user.id).select(
       '-password -confirmpassword'
     );
     res.json(user);
@@ -67,7 +67,7 @@ router.post(
       jwt.sign(
         payload,
         config.get('jwtSecret'),
-        { notBefore: 10 },
+        { notBefore: 0 },
         (err, token) => {
           if (err) throw err;
           res.json({ token });

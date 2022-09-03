@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAlert } from './actions/alert';
+import { register } from './actions/auth';
 import PropTypes from 'prop-types';
 
 // import axios from 'axios';
 
-const RegisterUser = ({ setAlert }) => {
+const RegisterUser = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     fname: '',
     lname: '',
@@ -27,7 +29,15 @@ const RegisterUser = ({ setAlert }) => {
     if (password !== confirmpassword) {
       setAlert('Passwords do not match', 'danger');
     } else {
-      console.log('SUCCESS!!!');
+      register({
+        fname,
+        lname,
+        healthid,
+        email,
+        password,
+        confirmpassword,
+        phoneno,
+      });
       // const newUser = {
       //   fname,
       //   lname,
@@ -53,6 +63,10 @@ const RegisterUser = ({ setAlert }) => {
     }
   };
 
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" />;
+  }
+
   return (
     <>
       <div className="my-5">
@@ -73,7 +87,7 @@ const RegisterUser = ({ setAlert }) => {
                   name="fname"
                   value={fname}
                   onChange={e => onChange(e)}
-                  required
+                  // required
                 />
               </div>
               <div className="mb-3">
@@ -96,7 +110,7 @@ const RegisterUser = ({ setAlert }) => {
                   aria-describedby="healthID"
                   value={healthid}
                   onChange={e => onChange(e)}
-                  required
+                  // required
                 />
               </div>
               <div className="mb-3">
@@ -108,7 +122,7 @@ const RegisterUser = ({ setAlert }) => {
                   name="email"
                   value={email}
                   onChange={e => onChange(e)}
-                  required
+                  // required
                 />
               </div>
               <div className="mb-3">
@@ -119,7 +133,7 @@ const RegisterUser = ({ setAlert }) => {
                   name="password"
                   value={password}
                   onChange={e => onChange(e)}
-                  required
+                  // required
                 />
               </div>
               <div className="mb-3">
@@ -130,7 +144,7 @@ const RegisterUser = ({ setAlert }) => {
                   name="confirmpassword"
                   value={confirmpassword}
                   onChange={e => onChange(e)}
-                  required
+                  // required
                 />
               </div>
               <div className="mb-3">
@@ -141,11 +155,11 @@ const RegisterUser = ({ setAlert }) => {
                   name="phoneno"
                   value={phoneno}
                   onChange={e => onChange(e)}
-                  required
+                  // required
                 />
               </div>
               <div className="mb-3 form-check">
-                <input type="checkbox" className="form-check-input" required />
+                <input type="checkbox" className="form-check-input" />
                 <label className="form-check-label">I agree</label>
               </div>
               <button type="submit" className="btn btn-primary">
@@ -161,6 +175,12 @@ const RegisterUser = ({ setAlert }) => {
 
 RegisterUser.propTypes = {
   setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
 
-export default connect(null, { setAlert })(RegisterUser);
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { setAlert, register })(RegisterUser);

@@ -1,8 +1,15 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Navigate } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 // import web from '../src/Images/415.jpg';
 
-const Home = () => {
+const Home = ({ isAuthenticated }) => {
+  if (isAuthenticated) {
+    return <Navigate to="/patientdashboard" />;
+  }
+
   return (
     <>
       <section id="header" className="d-flex align-items-center">
@@ -40,4 +47,12 @@ const Home = () => {
   );
 };
 
-export default Home;
+Home.propTypes = {
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps)(Home);

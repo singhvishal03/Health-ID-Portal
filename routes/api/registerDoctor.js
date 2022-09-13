@@ -16,7 +16,7 @@ router.post(
   '/',
   [
     check('fname', 'Name is required').not().isEmpty(),
-    check('loginid', 'Login ID is required').not().isEmpty(),
+    check('doctorid', 'Login ID is required').not().isEmpty(),
     check('department', 'Department is required').not().isEmpty(),
     check('email', 'Please include a valid email').isEmail(),
     check(
@@ -42,7 +42,7 @@ router.post(
     const {
       fname,
       lname,
-      loginid,
+      doctorid,
       department,
       email,
       password,
@@ -56,7 +56,7 @@ router.post(
 
     try {
       // See if doctor exists
-      let doctor = await Doctor.findOne({ loginid });
+      let doctor = await Doctor.findOne({ doctorid });
 
       if (doctor) {
         return res
@@ -75,7 +75,7 @@ router.post(
       doctor = new Doctor({
         fname,
         lname,
-        loginid,
+        doctorid,
         department,
         email,
         password,

@@ -9,7 +9,7 @@ const DoctorUserSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  loginid: {
+  doctorid: {
     type: String,
     required: true,
   },

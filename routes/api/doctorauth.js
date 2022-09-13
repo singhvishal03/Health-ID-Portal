@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../../middleware/auth');
+const auth = require('../../middleware/doctorauth');
 const config = require('config');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -10,15 +10,15 @@ const Doctor = require('../../models/Doctor');
 //@route              GET api/doctorauth/:id
 //@desc               Test route
 //@access_modifier    Public
-router.get('/:id', auth, async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
-    const doctor = await Doctor.findById(req.params.id).select(
+    const doctor = await Doctor.findById(req.doctor.id).select(
       '-password -confirmpassword'
     );
     res.json(doctor);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error');
+    res.status(500).send('There was a Server Error');
   }
 });
 
@@ -29,7 +29,7 @@ router.post(
   '/',
   [
     // check('fname', 'Name is required').not().isEmpty(),
-    check('loginid', 'Please include a valid loginid').exists(),
+    check('doctorid', 'Please include a valid doctorid').exists(),
     check('password', 'Password is required.').exists(),
   ],
   async (req, res) => {
@@ -38,11 +38,11 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
     //fname, lname, healthid,
-    const { loginid, password } = req.body;
+    const { doctorid, password } = req.body;
 
     try {
       // See if doctor exists
-      let doctor = await Doctor.findOne({ loginid });
+      let doctor = await Doctor.findOne({ doctorid });
 
       if (!doctor) {
         return res

@@ -59,8 +59,12 @@ const LoginUser = ({ login, isAuthenticated }) => {
                   // required
                 />
               </div>
-              <button type="submit" className="btn btn-primary">
-                Submit
+              <button
+                type="submit"
+                className="btn btn-primary"
+                style={{ width: '100%' }}
+              >
+                Login
               </button>
             </form>
           </div>

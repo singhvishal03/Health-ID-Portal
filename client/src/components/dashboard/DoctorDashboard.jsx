@@ -53,7 +53,7 @@ const DoctorDashboard = () => {
                 </div>
               </div>
               <div className="col-md-8 col-lg-7 col-xl-4 py-2 py-md-5">
-                <div className="card">
+                <div className="card shadow-lg">
                   <div className="card-body">
                     <h5 className="card-title">View your profile</h5>
                     <p className="text-muted my-3 card-text">
@@ -66,7 +66,7 @@ const DoctorDashboard = () => {
                 </div>
               </div>
               <div className="col-md-8 col-lg-7 col-xl-4 py-2 py-md-5">
-                <div className="card">
+                <div className="card shadow-lg">
                   <div className="card-body">
                     <h5 className="card-title">Edit Profile</h5>
                     <p className="text-muted my-3 card-text">

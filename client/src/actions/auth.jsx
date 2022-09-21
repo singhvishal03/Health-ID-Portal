@@ -7,6 +7,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  CLEAR_PROFILE,
 } from './types';
 import { setAlert } from './alert';
 import setAuthToken from '../utils/setAuthToken';
@@ -52,7 +53,7 @@ export const register =
     });
 
     try {
-      const res = await axios.post('./api/users', body, config);
+      const res = await axios.post('/api/users', body, config);
 
       dispatch({
         type: REGISTER_SUCCESS,
@@ -86,7 +87,7 @@ export const login = (phoneno, password) => async dispatch => {
   });
 
   try {
-    const res = await axios.post('./api/auth', body, config);
+    const res = await axios.post('/api/auth', body, config);
 
     dispatch({
       type: LOGIN_SUCCESS,
@@ -109,5 +110,6 @@ export const login = (phoneno, password) => async dispatch => {
 
 // Logout / Clear profile
 export const logout = () => dispatch => {
+  dispatch({ type: CLEAR_PROFILE });
   dispatch({ type: LOGOUT });
 };

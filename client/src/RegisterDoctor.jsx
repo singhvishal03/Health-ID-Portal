@@ -218,8 +218,12 @@ const RegisterDoctor = ({ setAlert, register, isAuthenticated }) => {
                 <input type="checkbox" className="form-check-input" />
                 <label className="form-check-label">I agree</label>
               </div>
-              <button type="submit" className="btn btn-primary">
-                Submit
+              <button
+                type="submit"
+                className="btn btn-primary"
+                style={{ width: '100%' }}
+              >
+                Register
               </button>
             </form>
           </div>

@@ -13,6 +13,9 @@ import Alert from './Alert';
 import PatientDashboard from '../src/components/dashboard/PatientDashboard';
 import DoctorDashboard from '../src/components/dashboard/DoctorDashboard';
 import AdminDashboard from '../src/components/dashboard/PatientDashboard';
+import CreatePatientProfile from './components/Profile/PatientProfile/CreateProfile';
+import EditProfile from './components/Profile/PatientProfile/EditProfile';
+import ViewProfile from './components/Profile/PatientProfile/ViewProfile';
 import PrivateRoutes from './components/routing/PrivateRoutes';
 import { Routes, Route } from 'react-router-dom';
 
@@ -47,6 +50,12 @@ const App = () => {
             <Route path="/patientdashboard" element={<PatientDashboard />} />
             <Route path="/doctordashboard" element={<DoctorDashboard />} />
             <Route path="/admindashboard" element={<AdminDashboard />} />
+            <Route
+              path="/create-patient-profile"
+              element={<CreatePatientProfile />}
+            />
+            <Route path="/edit-profile" element={<EditProfile />} />
+            <Route path="/my-profile" element={<ViewProfile />} />
           </Route>
           <Route
             path="*"

@@ -8,6 +8,13 @@ const PrivateRoutes = ({
   auth: { isAuthenticated, loading },
   ...rest
 }) => (
+  // {
+  //   return !isAuthenticated && !loading ? (
+  //     <Outlet />
+  //   ) : (
+  //     <Navigate to="/loginuser" />
+  //   );
+  // };
   <Outlet
     {...rest}
     render={props =>

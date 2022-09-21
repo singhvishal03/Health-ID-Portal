@@ -37,3 +37,20 @@
     font-size: 1.2rem;
   }
 }
+
+.alert {
+  padding: 0.8rem;
+  margin: 1rem 0;
+  opacity: 0.9;
+  color: #333;
+}
+
+.alert-danger {
+  background: rgb(255, 255, 255);
+  color: #fff;
+}
+
+.alert-success {
+  background: rgb(140, 217, 173);
+  color: #fff;
+}

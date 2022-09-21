@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import alert from './alert';
 import auth from './auth';
-import patientProfile from './patientProfile';
+import profile from './profile';
 
 export default combineReducers({
   alert,
   auth,
-  patientProfile,
+  profile,
 });

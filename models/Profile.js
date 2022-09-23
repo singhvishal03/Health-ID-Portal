@@ -29,6 +29,10 @@ const ProfileSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  healthidno: {
+    type: String,
+    required: false,
+  },
 });
 
 module.exports = Profile = mongoose.model('profile', ProfileSchema);

@@ -38,28 +38,6 @@ const RegisterUser = ({ setAlert, register, isAuthenticated }) => {
         confirmpassword,
         phoneno,
       });
-      // const newUser = {
-      //   fname,
-      //   lname,
-      //   healthid,
-      //   email,
-      //   password,
-      //   confirmpassword,
-      //   phoneno,
-      // };
-      // try {
-      //   const config = {
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //     },
-      //   };
-      //   const body = JSON.stringify(newUser);
-
-      //   const res = await axios.post('/api/users', body, config);
-      //   console.log(res.data);
-      // } catch (err) {
-      //   console.error(err.response.data);
-      // }
     }
   };
 
@@ -158,10 +136,10 @@ const RegisterUser = ({ setAlert, register, isAuthenticated }) => {
                   // required
                 />
               </div>
-              <div className="mb-3 form-check">
+              {/* <div className="mb-3 form-check">
                 <input type="checkbox" className="form-check-input" />
                 <label className="form-check-label">I agree</label>
-              </div>
+              </div> */}
               <button
                 type="submit"
                 className="btn btn-primary"

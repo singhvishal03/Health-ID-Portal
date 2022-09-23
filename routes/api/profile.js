@@ -45,7 +45,8 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { gender, dob, bloodgroup, state, district, address } = req.body;
+    const { gender, dob, bloodgroup, state, district, address, healthidno } =
+      req.body;
 
     // Build Profile object
     const profileFields = {};
@@ -56,6 +57,7 @@ router.post(
     if (state) profileFields.state = state;
     if (district) profileFields.district = district;
     if (address) profileFields.address = address;
+    if (healthidno) profileFields.healthidno = healthidno;
 
     try {
       let profile = await Profile.findOne({ user: req.user.id });

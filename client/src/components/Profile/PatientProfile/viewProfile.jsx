@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getCurrentProfile } from '../../../actions/profile';
@@ -9,53 +9,53 @@ const ViewProfile = ({
   profile: { profile, loading },
   getCurrentProfile,
 }) => {
-  const [formData, setFormData] = useState({
-    fname: '',
-    lname: '',
-    healthid: '',
-    email: '',
-    phoneno: '',
-    gender: '',
-    dob: '',
-    bloodgroup: '',
-    state: '',
-    district: '',
-    address: '',
-  });
+  const dobUpdated = profile.dob.substring(0, 10);
+  //=> {
+  //   const [formData, setFormData] = useState({
+  //     fname: '',
+  //     lname: '',
+  //     healthid: '',
+  //     email: '',
+  //     phoneno: '',
+  //     gender: '',
+  //     dob: '',
+  //     bloodgroup: '',
+  //     state: '',
+  //     district: '',
+  //     address: '',
+  //   });
 
   useEffect(() => {
     getCurrentProfile();
 
-    setFormData({
-      fname: loading || !user.fname ? '' : user.fname,
-      lname: loading || !user.lname ? '' : user.lname,
-      healthid: loading || !user.healthid ? '' : user.healthid,
-      email: loading || !user.email ? '' : user.email,
-      phoneno: loading || !user.phoneno ? '' : user.phoneno,
-      gender: loading || !profile.gender ? '' : profile.gender,
-      dob: loading || !profile.dob ? '' : profile.dob,
-      bloodgroup: loading || !profile.bloodgroup ? '' : profile.bloodgroup,
-      state: loading || !profile.state ? '' : profile.state,
-      district: loading || !profile.district ? '' : profile.district,
-      address: loading || !profile.address ? '' : profile.address,
-    });
-  }, [loading]);
+    //   setFormData({
+    //     fname: loading || !user.fname ? '' : user.fname,
+    //     lname: loading || !user.lname ? '' : user.lname,
+    //     healthid: loading || !user.healthid ? '' : user.healthid,
+    //     email: loading || !user.email ? '' : user.email,
+    //     phoneno: loading || !user.phoneno ? '' : user.phoneno,
+    //     gender: loading || !profile.gender ? '' : profile.gender,
+    //     dob: loading || !profile.dob ? '' : profile.dob,
+    //     bloodgroup: loading || !profile.bloodgroup ? '' : profile.bloodgroup,
+    //     state: loading || !profile.state ? '' : profile.state,
+    //     district: loading || !profile.district ? '' : profile.district,
+    //     address: loading || !profile.address ? '' : profile.address,
+    //   });
+  }, [loading, getCurrentProfile]);
 
-  const {
-    fname,
-    lname,
-    healthid,
-    email,
-    phoneno,
-    gender,
-    dob,
-    bloodgroup,
-    state,
-    district,
-    address,
-  } = formData;
-
-  const dobUpdated = dob.substring(0, 10);
+  // const {
+  //   fname,
+  //   lname,
+  //   healthid,
+  //   email,
+  //   phoneno,
+  //   gender,
+  //   dob,
+  //   bloodgroup,
+  //   state,
+  //   district,
+  //   address,
+  // } = formData;
 
   //   const onChange = e =>
   //   setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -76,26 +76,37 @@ const ViewProfile = ({
         <div className="row">
           <div className="col-md-6 col-10 mx-auto">
             <table className="table table-bordered">
+              <thead
+                className="thead-dark"
+                style={{ background: 'rgb(242 228 177)' }}
+              >
+                <tr>
+                  <th> Health ID Number </th>
+                  <th> {profile.healthidno}</th>
+                </tr>
+              </thead>
               <tbody>
                 <tr>
                   <td>Name</td>
-                  <td>{`${fname}` + `  ${lname}`}</td>
+                  <td>
+                    {user.fname} {user.lname}
+                  </td>
                 </tr>
                 <tr>
                   <td>Health ID</td>
-                  <td>{`${healthid}`}</td>
+                  <td>{user.healthid}</td>
                 </tr>
                 <tr>
                   <td>Email</td>
-                  <td>{`${email}`}</td>
+                  <td>{user.email}</td>
                 </tr>
                 <tr>
                   <td>Phone No</td>
-                  <td>{`${phoneno}`}</td>
+                  <td>{user.phoneno}</td>
                 </tr>
                 <tr>
                   <td>Gender</td>
-                  <td>{gender}</td>
+                  <td>{profile.gender}</td>
                 </tr>
                 <tr>
                   <td>Date of Birth</td>
@@ -103,19 +114,19 @@ const ViewProfile = ({
                 </tr>
                 <tr>
                   <td>Blood Group</td>
-                  <td>{bloodgroup}</td>
+                  <td>{profile.bloodgroup}</td>
                 </tr>
                 <tr>
                   <td>State</td>
-                  <td>{state}</td>
+                  <td>{profile.state}</td>
                 </tr>
                 <tr>
                   <td>District</td>
-                  <td>{district}</td>
+                  <td>{profile.district}</td>
                 </tr>
                 <tr>
                   <td>Address</td>
-                  <td>{address}</td>
+                  <td>{profile.address}</td>
                 </tr>
               </tbody>
             </table>
@@ -146,7 +157,6 @@ const ViewProfile = ({
 };
 
 ViewProfile.propTypes = {
-  //   createProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,

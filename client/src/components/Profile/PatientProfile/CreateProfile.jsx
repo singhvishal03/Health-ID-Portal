@@ -12,15 +12,26 @@ const CreateProfile = ({ createProfile, navigate }) => {
     state: '',
     district: '',
     address: '',
+    healthidno: '',
   });
 
-  const { gender, dob, bloodgroup, state, district, address } = formData;
+  let { gender, dob, bloodgroup, state, district, address } = formData;
 
   const onChange = e =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
 
   const onSubmit = e => {
     e.preventDefault();
+    var id = dob.replaceAll('-', '');
+    var finalid = id.substring(0, 8);
+    var seq = (Math.floor(Math.random() * 10000) + 10000)
+      .toString()
+      .substring(1);
+    formData.healthidno = finalid.concat(seq);
+    console.log(formData.healthidno);
     createProfile(formData, navigate);
   };
 

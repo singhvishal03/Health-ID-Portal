@@ -31,22 +31,9 @@ export const loadDoctor = () => async dispatch => {
   }
 };
 
-// Register User
+// Register Doctor
 export const register =
-  ({
-    fname,
-    lname,
-    doctorid,
-    department,
-    email,
-    password,
-    confirmpassword,
-    phoneno,
-    gender,
-    experience,
-    consultancycharge,
-    status,
-  }) =>
+  ({ fname, lname, doctorid, password, confirmpassword }) =>
   async dispatch => {
     const config = {
       headers: {
@@ -58,15 +45,8 @@ export const register =
       fname,
       lname,
       doctorid,
-      department,
-      email,
       password,
       confirmpassword,
-      phoneno,
-      gender,
-      experience,
-      consultancycharge,
-      status,
     });
 
     try {

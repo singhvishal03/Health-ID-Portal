@@ -5,22 +5,7 @@ const config = require('config');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { check, validationResult } = require('express-validator');
-const Doctor = require('../../models/Doctor');
-
-//@route              GET api/doctorauth
-//@desc               Test route
-//@access_modifier    Public
-router.get('/', auth, async (req, res) => {
-  try {
-    const doctor = await Doctor.findById(req.doctor.id).select(
-      '-password -confirmpassword'
-    );
-    res.json(doctor);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('There was a Server Error');
-  }
-});
+const Admin = require('../../models/Admin');
 
 //@route              POST api/doctorauth
 //@desc               Authenticate doctor & get token
@@ -29,7 +14,7 @@ router.post(
   '/',
   [
     // check('fname', 'Name is required').not().isEmpty(),
-    check('doctorid', 'Please include a valid doctorid').exists(),
+    check('adminid', 'Please include a valid adminid').exists(),
     check('password', 'Password is required.').exists(),
   ],
   async (req, res) => {
@@ -38,19 +23,19 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
     //fname, lname, healthid,
-    const { doctorid, password } = req.body;
+    const { adminid, password } = req.body;
 
     try {
-      // See if doctor exists
-      let doctor = await Doctor.findOne({ doctorid });
+      // See if admin exists
+      let admin = await Admin.findOne({ adminid });
 
-      if (!doctor) {
+      if (!admin) {
         return res
           .status(400)
           .json({ errors: [{ msg: 'Invalid Credentials' }] });
       }
 
-      const isMatch = await bcrypt.compare(password, doctor.password);
+      const isMatch = await bcrypt.compare(password, admin.password);
       if (!isMatch) {
         return res
           .status(400)
@@ -60,14 +45,14 @@ router.post(
       // Return jsonwebtoken
       const payload = {
         doctor: {
-          id: doctor.id,
+          id: admin.id,
         },
       };
 
       jwt.sign(
         payload,
         config.get('jwtSecret'),
-        { notBefore: 0 },
+        { notBefore: 10 },
         (err, token) => {
           if (err) throw err;
           res.json({ token });

@@ -10,6 +10,7 @@ const PatientDashboard = ({
   profile: { profile, loading },
 }) => {
   useEffect(() => {
+    document.body.style.overflowX = 'hidden';
     getCurrentProfile();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getCurrentProfile]);

@@ -9,7 +9,7 @@ const ViewProfile = ({
   profile: { profile, loading },
   getCurrentProfile,
 }) => {
-  const dobUpdated = profile.dob.substring(0, 10);
+  // const dobUpdated = profile.dob.substring(0, 10);
   //=> {
   //   const [formData, setFormData] = useState({
   //     fname: '',
@@ -68,90 +68,116 @@ const ViewProfile = ({
   return (
     <Fragment>
       <div className="my-5">
-        <h1 className="text-center text-primary">
+        <div className="container d-flex flex-column">
+          <div className="row">
+            <div className="col-md-6 col-10 mx-auto">
+              <div className="card shadow-lg mb-0">
+                <div className="card-body">
+                  <h3 className="card-title text-center text-primary">
+                    View Your Profile
+                  </h3>
+                  {/* <h1 className="text-center text-primary">
           <i className="fas fa-user"></i>View Profile
-        </h1>
-      </div>
-      <div className="container contact_div">
-        <div className="row">
-          <div className="col-md-6 col-10 mx-auto">
-            <table className="table table-bordered">
-              <thead
-                className="thead-dark"
-                style={{ background: 'rgb(242 228 177)' }}
-              >
-                <tr>
-                  <th> Health ID Number </th>
-                  <th> {profile.healthidno}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Name</td>
-                  <td>
-                    {user.fname} {user.lname}
-                  </td>
-                </tr>
-                <tr>
-                  <td>Health ID</td>
-                  <td>{user.healthid}</td>
-                </tr>
-                <tr>
-                  <td>Email</td>
-                  <td>{user.email}</td>
-                </tr>
-                <tr>
-                  <td>Phone No</td>
-                  <td>{user.phoneno}</td>
-                </tr>
-                <tr>
-                  <td>Gender</td>
-                  <td>{profile.gender}</td>
-                </tr>
-                <tr>
-                  <td>Date of Birth</td>
-                  <td>{dobUpdated}</td>
-                </tr>
-                <tr>
-                  <td>Blood Group</td>
-                  <td>{profile.bloodgroup}</td>
-                </tr>
-                <tr>
-                  <td>State</td>
-                  <td>{profile.state}</td>
-                </tr>
-                <tr>
-                  <td>District</td>
-                  <td>{profile.district}</td>
-                </tr>
-                <tr>
-                  <td>Address</td>
-                  <td>{profile.address}</td>
-                </tr>
-              </tbody>
-            </table>
-            <div className="mb-3">
-              <NavLink
-                className="btn btn-primary me-3"
-                to="/edit-profile"
-                style={{ width: '100%' }}
-              >
-                Edit My Profile
-              </NavLink>
-            </div>
-            <div className="mb-3">
-              <NavLink
-                type="submit"
-                className="btn btn-info"
-                style={{ width: '100%' }}
-                to="/patientdashboard"
-              >
-                Go back
-              </NavLink>
+        </h1> */}
+                </div>
+                {/* <div className="container d-flex flex-column">
+                <div className="row"> */}
+                {/* <div className="col-md-6 col-10 mx-auto"> */}
+                <table className="table table-bordered table-hover">
+                  <thead style={{ fontSize: '1.3rem' }}>
+                    <tr>
+                      <td
+                        className="text-center"
+                        colSpan="2"
+                        style={{ background: '#f2f2f2' }}
+                      >
+                        Health ID Number
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        className="text-center"
+                        colSpan="2"
+                        style={{
+                          background: '#FFE2BB',
+                          color: 'red',
+                          letterSpacing: 1,
+                        }}
+                      >
+                        {profile.healthidno}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-muted" style={{ fontSize: '14px' }}>
+                    <tr>
+                      <td>Name</td>
+                      <td>
+                        {user.fname} {user.lname}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Health ID</td>
+                      <td>{user.healthid}</td>
+                    </tr>
+                    <tr>
+                      <td>Email</td>
+                      <td>{user.email}</td>
+                    </tr>
+                    <tr>
+                      <td>Phone No</td>
+                      <td>{user.phoneno}</td>
+                    </tr>
+                    <tr>
+                      <td>Gender</td>
+                      <td>{profile.gender}</td>
+                    </tr>
+                    <tr>
+                      <td>Date of Birth</td>
+                      <td>{profile.dob.substring(0, 10)}</td>
+                    </tr>
+                    <tr>
+                      <td>Blood Group</td>
+                      <td>{profile.bloodgroup}</td>
+                    </tr>
+                    <tr>
+                      <td>State</td>
+                      <td>{profile.state}</td>
+                    </tr>
+                    <tr>
+                      <td>District</td>
+                      <td>{profile.district}</td>
+                    </tr>
+                    <tr>
+                      <td>Address</td>
+                      <td>{profile.address}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div className="btn-group mb-2" role="group">
+                  <NavLink
+                    className="btn btn-primary"
+                    to="/edit-profile"
+                    style={{ width: '100%' }}
+                  >
+                    Edit My Profile
+                  </NavLink>
+                  <NavLink
+                    type="submit"
+                    className="btn btn-success"
+                    style={{ width: '100%' }}
+                    to="/patientdashboard"
+                  >
+                    Go Back
+                  </NavLink>
+                </div>
+                {/* <div className="mb-3"></div> */}
+              </div>
             </div>
           </div>
         </div>
       </div>
+      {/* </div>
+      </div> */}
     </Fragment>
   );
 };

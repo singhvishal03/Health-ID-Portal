@@ -1,19 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../../middleware/doctorauth');
+const auth = require('../../middleware/adminauth');
 const config = require('config');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { check, validationResult } = require('express-validator');
 const Admin = require('../../models/Admin');
 
-//@route              POST api/doctorauth
-//@desc               Authenticate doctor & get token
+//@route              POST api/adminauth
+//@desc               Authenticate admin & get token
 //@access_modifier    Public
 router.post(
   '/',
   [
-    // check('fname', 'Name is required').not().isEmpty(),
     check('adminid', 'Please include a valid adminid').exists(),
     check('password', 'Password is required.').exists(),
   ],
@@ -22,7 +21,6 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    //fname, lname, healthid,
     const { adminid, password } = req.body;
 
     try {
@@ -44,7 +42,7 @@ router.post(
 
       // Return jsonwebtoken
       const payload = {
-        doctor: {
+        admin: {
           id: admin.id,
         },
       };
@@ -52,7 +50,7 @@ router.post(
       jwt.sign(
         payload,
         config.get('jwtSecret'),
-        { notBefore: 10 },
+        { notBefore: 0 },
         (err, token) => {
           if (err) throw err;
           res.json({ token });
@@ -64,5 +62,18 @@ router.post(
     }
   }
 );
+
+//@route              GET api/adminauth
+//@desc               Test route
+//@access_modifier    Public
+router.get('/', auth, async (req, res) => {
+  try {
+    const admin = await Admin.findById(req.admin.id).select('-password ');
+    res.json(admin);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 module.exports = router;
